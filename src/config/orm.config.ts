@@ -5,13 +5,7 @@ dotenv.config();
 export const typeOrmModuleOptions: TypeOrmModuleOptions = {
   type: 'postgres',
   url: process.env.DATABASE_URL,
-  // ssl: true,
-  // extra: {
-  //   ssl: {
-  //     rejectUnauthorized: false,
-  //   },
-  // },
-  synchronize: true,
+  synchronize: true, // IMPORTANT! Remove this before going into production
   entities: ['dist/**/*.entity{.ts,.js}'],
   autoLoadEntities: true,
   migrationsTableName: 'migrations',
