@@ -1,0 +1,20 @@
+# development docker-compose
+
+version: '3.4'
+services:
+  postgres:
+    container_name: 'find-location-postgres'
+    image: postgres:11.5-alpine
+    ports:
+      - 5432:5432
+    environment:
+      - POSTGRES_PASSWORD=hardpassword
+      - POSTGRES_USER=find-location-user
+      - POSTGRES_MULTIPLE_DATABASES="find-location-db","find-location-db-test"
+    volumes:
+      - ./tools/docker/entrypoint:/docker-entrypoint-initdb.d
+      - 'dbdata:/var/lib/postgresql/data'
+
+volumes:
+  dbdata:
+    name: find-location-volume
