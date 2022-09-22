@@ -10,31 +10,7 @@ Registered users then try to guess where the image was taken by placing a pin on
 **Technologies you will use** :
 Html, Css, MUI (ex. MaterialUI), Figma, JavaScript, Typescript, Node, NestJS, Express, React, Docker, Amazon AWS, Amazon S3, Git, GitHub, Jest, PostgreSQL, TypeORM, JWT, Postman, Swagger, Trello
 
-<img alt="image" src="https://brotherants.com/skillupmentor/images/image5.png" width="30px" /> 
-<img alt="image" src="https://brotherants.com/skillupmentor/images/image7.png" width="30px" /> 
-<img alt="image" src="https://brotherants.com/skillupmentor/images/mui-icon.png" width="30px" /> 
-<img alt="image" src="https://brotherants.com/skillupmentor/images/image12.png" width="25px" /> 
-<img alt="image" src="https://brotherants.com/skillupmentor/images/image17.png" width="30px" /> 
-<img alt="image" src="https://brotherants.com/skillupmentor/images/image4.png" width="30px" /> 
-<img alt="image" src="https://brotherants.com/skillupmentor/images/image3.png" width="30px" /> 
-<img alt="image" src="https://brotherants.com/skillupmentor/images/image19.png" width="30px" /> 
-<img alt="image" src="https://brotherants.com/skillupmentor/images/image1.png" width="30px" /> 
-<img alt="image" src="https://brotherants.com/skillupmentor/images/image11.png" width="30px" /> 
-<img alt="image" src="https://brotherants.com/skillupmentor/images/image18.png" width="30px" /> 
-<img alt="image" src="https://brotherants.com/skillupmentor/images/image16.png" width="30px" /> 
-<img alt="image" src="https://brotherants.com/skillupmentor/images/aws-s3-icon.png" width="30px" />
-<img alt="image" src="https://brotherants.com/skillupmentor/images/image2.png" width="30px" /> 
-<img alt="image" src="https://brotherants.com/skillupmentor/images/image10.png" width="30px" /> 
-<img alt="image" src="https://brotherants.com/skillupmentor/images/jest-icon.jpeg" width="30px" />
-<img alt="image" src="https://brotherants.com/skillupmentor/images/image8.png" width="30px" /> 
-<img alt="image" src="https://brotherants.com/skillupmentor/images/image15.png" width="30px" /> 
-<img alt="image" src="https://brotherants.com/skillupmentor/images/image14.png" width="30px" /> 
-<img alt="image" src="https://brotherants.com/skillupmentor/images/image9.png" width="30px" /> 
-<img alt="image" src="https://brotherants.com/skillupmentor/images/swagger.png" width="30px" />
-<img alt="image" src="https://brotherants.com/skillupmentor/images/image13.png" width="30px" />
-
-
-
+<img alt="image" src="https://brotherants.com/skillupmentor/images/image5.png" width="30px" /> <img alt="image" src="https://brotherants.com/skillupmentor/images/image7.png" width="30px" /> <img alt="image" src="https://brotherants.com/skillupmentor/images/mui-icon.png" width="30px" /> <img alt="image" src="https://brotherants.com/skillupmentor/images/image12.png" width="25px" /> <img alt="image" src="https://brotherants.com/skillupmentor/images/image17.png" width="30px" /> <img alt="image" src="https://brotherants.com/skillupmentor/images/image4.png" width="30px" /> <img alt="image" src="https://brotherants.com/skillupmentor/images/image3.png" width="30px" /> <img alt="image" src="https://brotherants.com/skillupmentor/images/image19.png" width="30px" /> <img alt="image" src="https://brotherants.com/skillupmentor/images/image1.png" width="30px" /> <img alt="image" src="https://brotherants.com/skillupmentor/images/image11.png" width="30px" /> <img alt="image" src="https://brotherants.com/skillupmentor/images/image18.png" width="30px" /> <img alt="image" src="https://brotherants.com/skillupmentor/images/image16.png" width="30px" /> <img alt="image" src="https://brotherants.com/skillupmentor/images/aws-s3-icon.png" width="30px" /> <img alt="image" src="https://brotherants.com/skillupmentor/images/image2.png" width="30px" /> <img alt="image" src="https://brotherants.com/skillupmentor/images/image10.png" width="30px" /> <img alt="image" src="https://brotherants.com/skillupmentor/images/jest-icon.jpeg" width="30px" /> <img alt="image" src="https://brotherants.com/skillupmentor/images/image8.png" width="30px" /> <img alt="image" src="https://brotherants.com/skillupmentor/images/image15.png" width="30px" /> <img alt="image" src="https://brotherants.com/skillupmentor/images/image14.png" width="30px" /> <img alt="image" src="https://brotherants.com/skillupmentor/images/image9.png" width="30px" /> <img alt="image" src="https://brotherants.com/skillupmentor/images/swagger.png" width="30px" /> <img alt="image" src="https://brotherants.com/skillupmentor/images/image13.png" width="30px" />
 
 ***Alert:***
 
@@ -74,14 +50,14 @@ Html, Css, MUI (ex. MaterialUI), Figma, JavaScript, Typescript, Node, NestJS, Ex
 - File upload on Amazon S3
 - JSON server responses
 - Docker
--  For local environment configuration (database, env vars, ...)
--  Dockerfile for building a docker image from the application code
+-  Docker: For local environment configuration (database, env vars, ...)
+-  Docker: Dockerfile for building a docker image from the application code
 - Deploy backend Docker Container on AWS
 - Deploy frontend on AWS S3
 - Tests (backend only) - EndToEnd test
--  All your endpoints must have at least one test, multiple edge case tests are a bonus
--  All tests must pass
--  Separate environment for testing
+-  Tests: All your endpoints must have at least one test, multiple edge case tests are a bonus
+-  Tests: All tests must pass
+-  Tests: Separate environment for testing
 - Implement Logging (logger)
 - Implement Cors (Cross-origin resource sharing)
 - Reactive form validation
@@ -108,13 +84,20 @@ Endpoints (add other endpoints that you need):
 /auth/login
 /auth/register
 
-/location 
+/location
+
 ```Return list of latest locations (you can add pagination)```
+
 /location/random 
+
 ```Return random location```
+
 /location 
+
 ```Create location```
+
 /location/guess/:id 
+
 ```Guess the location lat/lon```
 
 ***Explanation***:
