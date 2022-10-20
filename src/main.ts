@@ -2,6 +2,7 @@ import { ValidationPipe, INestApplication } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { AppModule } from './app.module';
+import { TransformInterceptor } from './common/types/transform.interceptor';
 
 const initSwagger = (app: INestApplication) => {
   const config = new DocumentBuilder()
@@ -23,11 +24,16 @@ const initValidation = (app: INestApplication) =>
     }),
   );
 
+const initInterceptors = (app: INestApplication) =>
+  app.useGlobalInterceptors(new TransformInterceptor());
+
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
+  app.enableCors();
 
   initSwagger(app);
   initValidation(app);
+  initInterceptors(app);
 
   await app.listen(3000);
 }
