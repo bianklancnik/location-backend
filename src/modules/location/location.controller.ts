@@ -12,6 +12,11 @@ export class LocationController {
     return this.locationService.getLocations(limit);
   }
 
+  @Get('/random')
+  getRandomLocation(): Promise<Location> {
+    return this.locationService.getRandomLocation();
+  }
+
   @Post()
   addLocation(@Body() createLocationDTO: CreateLocationDTO): Promise<Location> {
     return this.locationService.addLocation(createLocationDTO);

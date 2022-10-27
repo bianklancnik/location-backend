@@ -9,6 +9,8 @@ import { JwtService } from '@nestjs/jwt';
 import * as bcrypt from 'bcrypt';
 import { JwtPayloadDto } from './dto/jwt-payload.dto';
 import { User } from '../../entities/user.entity';
+import { UserRegisterDto } from './dto/user-register.dto';
+import { UserLoginDto } from './dto/user-login.dto';
 
 @Injectable()
 export class AuthService {
@@ -18,14 +20,17 @@ export class AuthService {
     private jwtService: JwtService,
   ) {}
 
-  async register(username: string, password: string) {
+  async register(userRegisterDto: UserRegisterDto) {
+    const { username, password } = userRegisterDto;
     const user = await this.usersRepository.findOne({ username });
 
     if (user) {
       throw new BadRequestException(`${username} is already taken`);
     }
 
-    const hashedPassword = await bcrypt.hash(password, 10);
+    //hash
+    const salt = await bcrypt.genSalt();
+    const hashedPassword = await bcrypt.hash(password, salt);
     const { password: pw, ...savedUser } = await this.usersRepository.save({
       username,
       password: hashedPassword,
@@ -42,7 +47,8 @@ export class AuthService {
     };
   }
 
-  async validateUser(username: string, password: string) {
+  async validateUser(userLoginDto: UserLoginDto) {
+    const { username, password } = userLoginDto;
     const user = await this.usersRepository.findOne(
       { username },
       { select: ['id', 'username', 'password'] },
