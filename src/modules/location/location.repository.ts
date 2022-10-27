@@ -12,6 +12,15 @@ export class LocationRepository extends Repository<Location> {
     return locations;
   }
 
+  async getRandomLocation(): Promise<Location> {
+    const location = this.createQueryBuilder('location')
+      .select(['location.name', 'location.lat', 'location.lon'])
+      .orderBy('RANDOM()')
+      .getOne();
+
+    return location;
+  }
+
   async addLocation(createLocationDTO: CreateLocationDTO): Promise<Location> {
     const { name, lat, lon } = createLocationDTO;
 

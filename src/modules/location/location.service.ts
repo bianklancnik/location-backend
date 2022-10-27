@@ -11,6 +11,10 @@ export class LocationService {
     return this.locationRepository.getLocations(limit);
   }
 
+  async getRandomLocation(): Promise<Location> {
+    return this.locationRepository.getRandomLocation();
+  }
+
   async addLocation(createLocationDTO: CreateLocationDTO): Promise<Location> {
     return this.locationRepository.addLocation(createLocationDTO);
   }
