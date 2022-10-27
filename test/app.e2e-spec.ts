@@ -8,6 +8,7 @@ import { User } from '../src/entities/user.entity';
 describe('AppController (e2e)', () => {
   let app: INestApplication;
   let userRepository: Repository<User>;
+  let locationRepository: Repository<Location>;
 
   let userToken;
 
@@ -18,6 +19,7 @@ describe('AppController (e2e)', () => {
 
     app = moduleFixture.createNestApplication();
     userRepository = await moduleFixture.get('UserRepository');
+    locationRepository = await moduleFixture.get('LocationRepository');
     await app.init();
   });
 
@@ -25,11 +27,16 @@ describe('AppController (e2e)', () => {
     await app.close();
   });
 
-  it('/ (GET)', () => {
+  it('/location (GET) should return locations', () => {
     return request(app.getHttpServer())
-      .get('/')
-      .expect(200)
-      .expect('It works!');
+      .get('/location')
+      .expect(200);
+  });
+
+  it('/location (POST) should create new location', () => {
+    return request(app.getHttpServer())
+      .post('/location')
+      .expect(200);
   });
 
   it('/auth/register (POST) should register new user', () => {
@@ -72,6 +79,7 @@ describe('AppController (e2e)', () => {
   // });
 
   afterAll(async () => {
+    await locationRepository.query('DELETE FROM "location"');
     await userRepository.query('DELETE FROM "user"');
   });
 });
