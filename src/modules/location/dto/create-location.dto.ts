@@ -5,8 +5,14 @@ export class CreateLocationDTO {
   name: string;
 
   @IsNotEmpty()
-  lat: string;
+  address: string;
 
   @IsNotEmpty()
-  lon: string;
+  lat: number;
+
+  @IsNotEmpty()
+  lon: number;
+
+  @IsNotEmpty()
+  img: string;
 }
