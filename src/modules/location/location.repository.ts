@@ -2,6 +2,7 @@ import { Location } from 'src/entities/location.entity';
 import { EntityRepository, Repository } from 'typeorm';
 import { CreateLocationDTO } from './dto/create-location.dto';
 import { Logger } from '@nestjs/common';
+import { User } from 'src/entities/user.entity';
 
 @EntityRepository(Location)
 export class LocationRepository extends Repository<Location> {
@@ -36,7 +37,10 @@ export class LocationRepository extends Repository<Location> {
     return location;
   }
 
-  async addLocation(createLocationDTO: CreateLocationDTO): Promise<Location> {
+  async addLocation(
+    createLocationDTO: CreateLocationDTO,
+    user: User,
+  ): Promise<Location> {
     const { name, address, lat, lon, img } = createLocationDTO;
 
     const location = this.create({
@@ -45,6 +49,7 @@ export class LocationRepository extends Repository<Location> {
       lat,
       lon,
       img,
+      user,
     });
 
     await this.save(location);

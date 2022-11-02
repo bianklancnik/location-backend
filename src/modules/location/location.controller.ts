@@ -1,5 +1,16 @@
-import { Controller, Get, Post, Body, Query, Param } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Query,
+  Param,
+  UseGuards,
+} from '@nestjs/common';
+import { AuthGuard } from '@nestjs/passport';
 import { Location } from 'src/entities/location.entity';
+import { User } from 'src/entities/user.entity';
+import { GetUser } from 'src/utils/types/get-user.decorator';
 import { CreateLocationDTO } from './dto/create-location.dto';
 import { GuessLocationDTO } from './dto/guess-location.dto';
 import { LocationService } from './location.service';
@@ -19,11 +30,16 @@ export class LocationController {
   }
 
   @Post()
-  addLocation(@Body() createLocationDTO: CreateLocationDTO): Promise<Location> {
-    return this.locationService.addLocation(createLocationDTO);
+  @UseGuards(AuthGuard())
+  addLocation(
+    @Body() createLocationDTO: CreateLocationDTO,
+    @GetUser() user: User,
+  ): Promise<Location> {
+    return this.locationService.addLocation(createLocationDTO, user);
   }
 
   @Post('/guess/:id')
+  @UseGuards(AuthGuard())
   guessLocation(
     @Param('id') id: number,
     @Body() guessLocationDTO: GuessLocationDTO,

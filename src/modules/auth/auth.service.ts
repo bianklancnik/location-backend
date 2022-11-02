@@ -1,6 +1,7 @@
 import {
   BadRequestException,
   Injectable,
+  Logger,
   NotFoundException,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -14,6 +15,7 @@ import { UserLoginDto } from './dto/user-login.dto';
 
 @Injectable()
 export class AuthService {
+  private logger = new Logger('AuthService');
   constructor(
     @InjectRepository(User)
     private usersRepository: Repository<User>,
@@ -21,7 +23,7 @@ export class AuthService {
   ) {}
 
   async register(userRegisterDto: UserRegisterDto) {
-    const { username, password } = userRegisterDto;
+    const { username, email, password } = userRegisterDto;
     const user = await this.usersRepository.findOne({ username });
 
     if (user) {
@@ -33,9 +35,11 @@ export class AuthService {
     const hashedPassword = await bcrypt.hash(password, salt);
     const { password: pw, ...savedUser } = await this.usersRepository.save({
       username,
+      email,
       password: hashedPassword,
     });
 
+    this.logger.verbose('User successfully registered');
     return savedUser;
   }
 
@@ -66,6 +70,7 @@ export class AuthService {
 
     delete user.password;
 
+    this.logger.verbose('User successfully validated');
     return user;
   }
 }
