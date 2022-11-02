@@ -8,10 +8,16 @@ export class Location extends CustomBaseEntity {
   name: string;
 
   @Column()
-  lat: string;
+  address: string;
 
   @Column()
-  lon: string;
+  img: string;
+
+  @Column()
+  lat: number;
+
+  @Column()
+  lon: number;
 
   @ManyToOne(
     () => User,
