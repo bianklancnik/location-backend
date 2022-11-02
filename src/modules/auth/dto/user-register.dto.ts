@@ -9,6 +9,10 @@ export class UserRegisterDto {
 
   @ApiProperty()
   @IsString()
+  email: string;
+
+  @ApiProperty()
+  @IsString()
   @MinLength(6)
   password: string;
 }

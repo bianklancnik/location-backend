@@ -8,6 +8,9 @@ export class User extends CustomBaseEntity {
   @Index()
   username: string;
 
+  @Column({ unique: true })
+  email: string;
+
   @Column({ select: false })
   password: string;
 
