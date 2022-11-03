@@ -33,7 +33,7 @@ export class LocationService {
     return dist;
   }
 
-  //Help function for calculating air distance between two locations (usign lantitude and longtitude)
+  //Help function for calculating air distance between two locations (usign lantitude and longitude)
   calculateDistance(
     locationLat: number,
     locationLon: number,
