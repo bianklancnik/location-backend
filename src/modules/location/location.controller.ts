@@ -8,6 +8,7 @@ import {
   UseGuards,
 } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { Location } from 'src/entities/location.entity';
 import { User } from 'src/entities/user.entity';
 import { GetUser } from 'src/utils/types/get-user.decorator';
@@ -15,6 +16,8 @@ import { CreateLocationDTO } from './dto/create-location.dto';
 import { GuessLocationDTO } from './dto/guess-location.dto';
 import { LocationService } from './location.service';
 
+@ApiTags('location')
+@ApiBearerAuth()
 @Controller('location')
 export class LocationController {
   constructor(private locationService: LocationService) {}
