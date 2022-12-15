@@ -6,10 +6,13 @@ import { Location } from './location.entity';
 export class User extends CustomBaseEntity {
   @Column({ unique: true })
   @Index()
-  username: string;
-
-  @Column({ unique: true })
   email: string;
+
+  @Column()
+  firstName: string;
+
+  @Column()
+  lastName: string;
 
   @Column({ select: false })
   password: string;
