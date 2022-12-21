@@ -66,7 +66,7 @@ export class AuthService {
     const isMatch = await bcrypt.compare(password, user.password);
 
     if (!isMatch) {
-      throw new BadRequestException('Passwords does not match');
+      throw new BadRequestException('Passwords do not match');
     }
 
     delete user.password;
