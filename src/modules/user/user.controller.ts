@@ -4,6 +4,7 @@ import { ApiBadRequestResponse, ApiOkResponse, ApiTags } from '@nestjs/swagger';
 import { UserInfo } from 'src/common/interfaces/user-info.interface';
 import { User } from 'src/entities/user.entity';
 import { GetUser } from 'src/utils/types/get-user.decorator';
+import { UpdateUserAvatarDTO } from './dto/update-user-avatar.dto';
 import { UpdateUserDTO } from './dto/update-user.dto';
 import { UserService } from './user.service';
 
@@ -26,5 +27,15 @@ export class UserController {
   @ApiBadRequestResponse()
   updateUserInformation(@Body() updateUserDTO: UpdateUserDTO): Promise<User> {
     return this.userService.updateUserInformation(updateUserDTO);
+  }
+
+  @Patch('update/avatar')
+  @UseGuards(AuthGuard())
+  @ApiOkResponse({ type: User })
+  @ApiBadRequestResponse()
+  updateUserAvatar(
+    @Body() updateUserAvatarDTO: UpdateUserAvatarDTO,
+  ): Promise<User> {
+    return this.userService.updateUserAvatar(updateUserAvatarDTO);
   }
 }

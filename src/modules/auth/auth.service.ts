@@ -38,6 +38,7 @@ export class AuthService {
       firstName,
       lastName,
       password: hashedPassword,
+      avatar: '',
     });
 
     this.logger.verbose('User successfully registered');

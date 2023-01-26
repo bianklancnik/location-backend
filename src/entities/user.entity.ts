@@ -22,6 +22,10 @@ export class User extends CustomBaseEntity {
   @Column({ select: false })
   password: string;
 
+  @ApiProperty()
+  @Column()
+  avatar: string;
+
   @ApiProperty({ isArray: true })
   @OneToMany(
     () => Location,
