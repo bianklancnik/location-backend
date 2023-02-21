@@ -1,5 +1,12 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsNotEmpty, IsNumber, IsOptional } from 'class-validator';
+import {
+  IsNotEmpty,
+  IsNumber,
+  IsOptional,
+  IsString,
+  Matches,
+  MinLength,
+} from 'class-validator';
 
 export class UpdateUserDTO {
   @ApiProperty()
@@ -25,5 +32,11 @@ export class UpdateUserDTO {
 
   @ApiProperty({ required: false })
   @IsOptional()
+  @IsString()
+  @MinLength(6)
+  @Matches(/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/, {
+    message:
+      'Password should have 1 uppercase, 1 lowercase letter along with a number and special character and be 8 characters long.',
+  })
   newPassword: string;
 }

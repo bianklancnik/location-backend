@@ -7,7 +7,7 @@ export class UpdateUserAvatarDTO {
   @IsNumber()
   id: number;
 
-  @ApiProperty({ required: true })
+  @ApiProperty({ required: false })
   @IsOptional()
   avatar: string;
 }

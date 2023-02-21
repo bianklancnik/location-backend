@@ -4,6 +4,9 @@ import { EntityRepository, Repository } from 'typeorm';
 import { UpdateUserDTO } from './dto/update-user.dto';
 import * as bcrypt from 'bcrypt';
 import { UpdateUserAvatarDTO } from './dto/update-user-avatar.dto';
+import { ForgotPasswordDTO } from './dto/forgot-password.dto';
+import nodemailer = require('nodemailer');
+import { ResetPasswordDTO } from './dto/reset-password.dto';
 
 @EntityRepository(User)
 export class UsersRepository extends Repository<User> {
@@ -67,6 +70,58 @@ export class UsersRepository extends Repository<User> {
       );
     } finally {
       this.logger.verbose('Successfully updated user avatar');
+    }
+  }
+
+  async forgotPassword(forgotPasswordDTO: ForgotPasswordDTO): Promise<void> {
+    const { email } = forgotPasswordDTO;
+    this.logger.log(`Checking if email ${email} exists`);
+    const user = await this.findOneOrFail({ email });
+    if (user) {
+      const transporter = nodemailer.createTransport({
+        host: 'smtp-relay.sendinblue.com',
+        port: 587,
+        secure: false, // true for 465, false for other ports
+        auth: {
+          user: process.env.SMTP_USER, // generated ethereal user
+          pass: process.env.SMTP_PASSWORD, // generated ethereal password
+        },
+      });
+
+      const token = Math.random()
+        .toString(32)
+        .slice(2, 12);
+      const currentDate = new Date();
+      const expirationDate = new Date(currentDate.getTime() + 15 * 60000);
+      user.token = token;
+      user.tokenExpiryDate = expirationDate;
+      this.save(user);
+
+      const info = await transporter.sendMail({
+        from: '"Geotagger" <geotaggerteam@geotagger.com>', // sender address
+        to: `${email}`, // list of receivers
+        subject: 'Password reset token', // Subject line
+        text: 'Hello! Here is your password reset token:', // plain text body
+        html: `<h3>Hello!</h3><p>Here is your password reset token: <b>${token}</b></p><p>It expires in 15 minutes.</p>`, // html body
+      });
+    }
+    this.logger.verbose('Reset password email sent to user');
+  }
+
+  async resetPassword(resetPasswordDTO: ResetPasswordDTO): Promise<boolean> {
+    const { email, token, password } = resetPasswordDTO;
+    this.logger.log(`Reseting user password`);
+    const user = await this.findOneOrFail({ email });
+    const currentTime = new Date();
+    if (token === user.token && currentTime <= user.tokenExpiryDate) {
+      const salt = await bcrypt.genSalt();
+      const hashedPassword = await bcrypt.hash(password, salt);
+      user.password = hashedPassword;
+      this.save(user);
+      this.logger.verbose(`Password for user ${email} succesfully reseted`);
+      return true;
+    } else {
+      return false;
     }
   }
 }
