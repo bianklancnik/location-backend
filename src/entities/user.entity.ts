@@ -1,4 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
+import { IsOptional } from 'class-validator';
 import { Column, Entity, Index, OneToMany } from 'typeorm';
 import { CustomBaseEntity } from './base.entity';
 import { Location } from './location.entity';
@@ -25,6 +26,14 @@ export class User extends CustomBaseEntity {
   @ApiProperty()
   @Column()
   avatar: string;
+
+  @Column({ nullable: true })
+  @IsOptional()
+  token: string;
+
+  @Column({ nullable: true })
+  @IsOptional()
+  tokenExpiryDate: Date;
 
   @ApiProperty({ isArray: true })
   @OneToMany(

@@ -41,7 +41,7 @@ export class AuthService {
       avatar: '',
     });
 
-    this.logger.verbose('User successfully registered');
+    this.logger.verbose(`User with email ${email} successfully registered`);
     return savedUser;
   }
 
@@ -72,7 +72,7 @@ export class AuthService {
 
     delete user.password;
 
-    this.logger.verbose('User successfully validated');
+    this.logger.verbose(`User with email ${email} successfully validated`);
     return user;
   }
 }
