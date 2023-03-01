@@ -7,10 +7,6 @@ import { User } from './user.entity';
 export class Location extends CustomBaseEntity {
   @ApiProperty()
   @Column()
-  name: string;
-
-  @ApiProperty()
-  @Column()
   address: string;
 
   @ApiProperty()
@@ -18,11 +14,11 @@ export class Location extends CustomBaseEntity {
   img: string;
 
   @ApiProperty()
-  @Column()
+  @Column({ type: 'decimal', precision: 16, scale: 14, default: 0 })
   lat: number;
 
   @ApiProperty()
-  @Column()
+  @Column({ type: 'decimal', precision: 16, scale: 14, default: 0 })
   lon: number;
 
   @ApiProperty({ isArray: true })

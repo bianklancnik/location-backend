@@ -3,13 +3,6 @@ import { IsNotEmpty } from 'class-validator';
 
 export class CreateLocationDTO {
   @ApiProperty({
-    description: 'Location name',
-    default: 'Location 1',
-  })
-  @IsNotEmpty()
-  name: string;
-
-  @ApiProperty({
     description: 'Location address',
     default: 'Goriska cesta 65, 3320 Velenje, Slovenia',
   })
