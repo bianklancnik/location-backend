@@ -10,10 +10,10 @@ export class LocationRepository extends Repository<Location> {
   async getLocations(limit?: number): Promise<Location[]> {
     const locations = this.createQueryBuilder('location')
       .select([
-        'location.name',
         'location.address',
         'location.lat',
         'location.lon',
+        'location.img',
       ])
       .limit(limit)
       .getMany();
@@ -25,10 +25,10 @@ export class LocationRepository extends Repository<Location> {
   async getRandomLocation(): Promise<Location> {
     const location = this.createQueryBuilder('location')
       .select([
-        'location.name',
         'location.address',
         'location.lat',
         'location.lon',
+        'location.img',
       ])
       .orderBy('RANDOM()')
       .getOne();
@@ -40,11 +40,10 @@ export class LocationRepository extends Repository<Location> {
   async addLocation(
     createLocationDTO: CreateLocationDTO,
     user: User,
-  ): Promise<Location> {
-    const { name, address, lat, lon, img } = createLocationDTO;
+  ): Promise<void> {
+    const { address, lat, lon, img } = createLocationDTO;
 
     const location = this.create({
-      name,
       address,
       lat,
       lon,
@@ -55,6 +54,5 @@ export class LocationRepository extends Repository<Location> {
     await this.save(location);
 
     this.logger.verbose('Successfully added location');
-    return location;
   }
 }

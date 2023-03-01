@@ -20,7 +20,7 @@ export class LocationService {
   async addLocation(
     createLocationDTO: CreateLocationDTO,
     user: User,
-  ): Promise<Location> {
+  ): Promise<void> {
     return this.locationRepository.addLocation(createLocationDTO, user);
   }
 

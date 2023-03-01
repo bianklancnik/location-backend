@@ -37,7 +37,7 @@ export class LocationController {
   addLocation(
     @Body() createLocationDTO: CreateLocationDTO,
     @GetUser() user: User,
-  ): Promise<Location> {
+  ): Promise<void> {
     return this.locationService.addLocation(createLocationDTO, user);
   }
 
