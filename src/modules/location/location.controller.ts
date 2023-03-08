@@ -6,6 +6,8 @@ import {
   Query,
   Param,
   UseGuards,
+  Delete,
+  Patch,
 } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
@@ -14,6 +16,7 @@ import { User } from 'src/entities/user.entity';
 import { GetUser } from 'src/utils/types/get-user.decorator';
 import { CreateLocationDTO } from './dto/create-location.dto';
 import { GuessLocationDTO } from './dto/guess-location.dto';
+import { UpdateLocationDTO } from './dto/update-location.dto';
 import { LocationService } from './location.service';
 
 @ApiTags('location')
@@ -30,6 +33,33 @@ export class LocationController {
   @Get('/random')
   getRandomLocation(): Promise<Location> {
     return this.locationService.getRandomLocation();
+  }
+
+  @Get('/user')
+  @UseGuards(AuthGuard())
+  getUserLocations(@GetUser() user: User): Promise<Location[]> {
+    return this.locationService.getUserLocations(user);
+  }
+
+  //get id on the end because of bug?
+  @Get(':id')
+  getLocationById(@Param('id') id: number): Promise<Location> {
+    return this.locationService.getLocation(id);
+  }
+
+  @Patch(':id')
+  @UseGuards(AuthGuard())
+  updateLocation(
+    @Param('id') id: number,
+    @Body() updateLocationDTO: UpdateLocationDTO,
+  ): Promise<Location> {
+    return this.locationService.updateLocation(id, updateLocationDTO);
+  }
+
+  @Delete(':id')
+  @UseGuards(AuthGuard())
+  deleteLocation(@Param('id') id: number): Promise<void> {
+    return this.locationService.deleteLocation(id);
   }
 
   @Post()
