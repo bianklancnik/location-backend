@@ -3,6 +3,7 @@ import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import typeOrmModuleOptions from './config/orm.config';
 import { AuthModule } from './modules/auth/auth.module';
+import { DistanceModule } from './modules/distance/distance.module';
 import { LocationModule } from './modules/location/location.module';
 import { UserModule } from './modules/user/user.module';
 
@@ -18,6 +19,7 @@ import { UserModule } from './modules/user/user.module';
     AuthModule,
     LocationModule,
     UserModule,
+    DistanceModule,
   ],
 })
 export class AppModule {}

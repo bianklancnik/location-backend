@@ -11,6 +11,7 @@ export class LocationRepository extends Repository<Location> {
   async getLocations(limit?: number): Promise<Location[]> {
     const locations = await this.createQueryBuilder('location')
       .select([
+        'location.id',
         'location.address',
         'location.lat',
         'location.lon',
@@ -88,7 +89,7 @@ export class LocationRepository extends Repository<Location> {
   ): Promise<void> {
     const { address, lat, lon, img } = createLocationDTO;
 
-    const location = await this.create({
+    const location = this.create({
       address,
       lat,
       lon,

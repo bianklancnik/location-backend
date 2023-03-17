@@ -3,13 +3,13 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { AuthModule } from 'src/modules/auth/auth.module';
 import { LocationRepository } from 'src/modules/location/location.repository';
 import { UserController } from './user.controller';
-import { UsersRepository } from './user.repository';
+import { UserRepository } from './user.repository';
 import { UserService } from './user.service';
 
 @Module({
   imports: [
     AuthModule,
-    TypeOrmModule.forFeature([LocationRepository, UsersRepository]),
+    TypeOrmModule.forFeature([LocationRepository, UserRepository]),
   ],
   controllers: [UserController],
   providers: [UserService],

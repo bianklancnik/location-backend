@@ -1,13 +1,13 @@
 import {
-  Controller,
-  Get,
-  Post,
   Body,
-  Query,
-  Param,
-  UseGuards,
+  Controller,
   Delete,
+  Get,
+  Param,
   Patch,
+  Post,
+  Query,
+  UseGuards,
 } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
@@ -15,7 +15,6 @@ import { Location } from 'src/entities/location.entity';
 import { User } from 'src/entities/user.entity';
 import { GetUser } from 'src/utils/types/get-user.decorator';
 import { CreateLocationDTO } from './dto/create-location.dto';
-import { GuessLocationDTO } from './dto/guess-location.dto';
 import { UpdateLocationDTO } from './dto/update-location.dto';
 import { LocationService } from './location.service';
 
@@ -69,18 +68,5 @@ export class LocationController {
     @GetUser() user: User,
   ): Promise<void> {
     return this.locationService.addLocation(createLocationDTO, user);
-  }
-
-  @Post('/guess/:id')
-  @UseGuards(AuthGuard())
-  guessLocation(
-    @Param('id') id: number,
-    @Body() guessLocationDTO: GuessLocationDTO,
-  ): Promise<number> {
-    return this.locationService.guessLocation(
-      id,
-      guessLocationDTO.lat,
-      guessLocationDTO.lon,
-    );
   }
 }
