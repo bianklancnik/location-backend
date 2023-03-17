@@ -9,7 +9,7 @@ import nodemailer = require('nodemailer');
 import { ResetPasswordDTO } from './dto/reset-password.dto';
 
 @EntityRepository(User)
-export class UsersRepository extends Repository<User> {
+export class UserRepository extends Repository<User> {
   private logger = new Logger('UserRepository');
   async updateUserInformation(updateUserDTO: UpdateUserDTO): Promise<User> {
     try {
@@ -40,7 +40,7 @@ export class UsersRepository extends Repository<User> {
         user.avatar = updateUserDTO.avatar;
       }
 
-      return this.save(user);
+      return await this.save(user);
     } catch (err) {
       throw new BadRequestException(
         `Update for user with id ${updateUserDTO.id} failed`,
@@ -63,7 +63,7 @@ export class UsersRepository extends Repository<User> {
         user.avatar = updateUserAvatarDTO.avatar;
       }
 
-      return this.save(user);
+      return await this.save(user);
     } catch (err) {
       throw new BadRequestException(
         `Update for user with id ${updateUserAvatarDTO.id} failed`,
@@ -95,7 +95,7 @@ export class UsersRepository extends Repository<User> {
       const expirationDate = new Date(currentDate.getTime() + 15 * 60000);
       user.token = token;
       user.tokenExpiryDate = expirationDate;
-      this.save(user);
+      await this.save(user);
 
       const info = await transporter.sendMail({
         from: '"Geotagger" <geotaggerteam@geotagger.com>', // sender address
@@ -117,7 +117,7 @@ export class UsersRepository extends Repository<User> {
       const salt = await bcrypt.genSalt();
       const hashedPassword = await bcrypt.hash(password, salt);
       user.password = hashedPassword;
-      this.save(user);
+      await this.save(user);
       this.logger.verbose(`Password for user ${email} succesfully reseted`);
       return true;
     } else {

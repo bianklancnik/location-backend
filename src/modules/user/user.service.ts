@@ -6,14 +6,14 @@ import { ForgotPasswordDTO } from './dto/forgot-password.dto';
 import { ResetPasswordDTO } from './dto/reset-password.dto';
 import { UpdateUserAvatarDTO } from './dto/update-user-avatar.dto';
 import { UpdateUserDTO } from './dto/update-user.dto';
-import { UsersRepository } from './user.repository';
+import { UserRepository } from './user.repository';
 
 @Injectable()
 export class UserService {
   private logger = new Logger('UserService');
   constructor(
-    @InjectRepository(UsersRepository)
-    private usersRepository: UsersRepository,
+    @InjectRepository(UserRepository)
+    private usersRepository: UserRepository,
   ) {}
 
   async userInformation(user: User): Promise<UserInfo> {
