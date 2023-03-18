@@ -16,6 +16,10 @@ export class DistanceService {
     return this.distanceRepository.getDistancesByLocationId(locationId);
   }
 
+  async getUserBestGuesses(user: User): Promise<Distance[]> {
+    return this.distanceRepository.getUserBestGuesses(user);
+  }
+
   async guessLocation(
     locationId: number,
     user: User,

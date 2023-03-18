@@ -1,5 +1,6 @@
 import { Logger } from '@nestjs/common';
 import { Distance } from 'src/entities/distance.entity';
+import { User } from 'src/entities/user.entity';
 import { EntityRepository, Repository } from 'typeorm';
 
 @EntityRepository(Distance)
@@ -23,6 +24,21 @@ export class DistanceRepository extends Repository<Distance> {
       .orderBy('distance.distance', 'ASC')
       .getMany();
     return distances;
+  }
+
+  async getUserBestGuesses(user: User): Promise<Distance[]> {
+    const locations = await this.createQueryBuilder('distance')
+      .select(['distance.distance', 'location.id', 'location.img'])
+      .innerJoin('distance.location', 'location')
+      .innerJoin('distance.user', 'user')
+      .where('user.id = :uid')
+      .setParameter('uid', user.id)
+      .orderBy('distance.distance', 'ASC')
+      .getMany();
+    this.logger.verbose(
+      `Successfully loaded best guesses from user ${user.email}`,
+    );
+    return locations;
   }
 
   async fetchEntryForDistance(

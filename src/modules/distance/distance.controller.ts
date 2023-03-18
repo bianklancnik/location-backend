@@ -13,6 +13,12 @@ import { GuessLocationDTO } from './dto/guess-location.dto';
 export class DistanceController {
   constructor(private distanceService: DistanceService) {}
 
+  @Get('/user/best')
+  @UseGuards(AuthGuard())
+  getUserBestGuesses(@GetUser() user: User): Promise<Distance[]> {
+    return this.distanceService.getUserBestGuesses(user);
+  }
+
   @Get('/:id')
   getDistancesByLocationId(
     @Param('id') locationId: number,
