@@ -1,9 +1,11 @@
 import { Body, Controller, Get, Param, Post, UseGuards } from '@nestjs/common';
+import { Query } from '@nestjs/common/decorators';
 import { AuthGuard } from '@nestjs/passport';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { Distance } from 'src/entities/distance.entity';
 import { User } from 'src/entities/user.entity';
 import { GetUser } from 'src/utils/types/get-user.decorator';
+import { PaginationParams } from 'src/utils/types/pagination-params';
 import { DistanceService } from './distance.service';
 import { GuessLocationDTO } from './dto/guess-location.dto';
 
@@ -15,12 +17,15 @@ export class DistanceController {
 
   @Get('/user/best')
   @UseGuards(AuthGuard())
-  getUserBestGuesses(@GetUser() user: User): Promise<Distance[]> {
-    return this.distanceService.getUserBestGuesses(user);
+  getUserBestGuesses(
+    @GetUser() user: User,
+    @Query() { limit }: PaginationParams,
+  ): Promise<Distance[]> {
+    return this.distanceService.getUserBestGuesses(user, limit);
   }
 
   @Get('/:id')
-  getDistancesByLocationId(
+  getDistancesForLocation(
     @Param('id') locationId: number,
   ): Promise<Distance[]> {
     return this.distanceService.getDistancesByLocationId(locationId);
