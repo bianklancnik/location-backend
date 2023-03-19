@@ -64,7 +64,7 @@ export class LocationRepository extends Repository<Location> {
     return location;
   }
 
-  async getUserLocations(user: User): Promise<Location[]> {
+  async getUserLocations(user: User, limit?: number): Promise<Location[]> {
     const locations = await this.createQueryBuilder('location')
       .select([
         'location.id',
@@ -76,6 +76,7 @@ export class LocationRepository extends Repository<Location> {
       .innerJoin('location.user', 'user')
       .where('user.id = :uid')
       .setParameter('uid', user.id)
+      .limit(limit)
       .getMany();
     this.logger.verbose(
       `Successfully loaded locations from user ${user.email}`,

@@ -26,7 +26,7 @@ export class DistanceRepository extends Repository<Distance> {
     return distances;
   }
 
-  async getUserBestGuesses(user: User): Promise<Distance[]> {
+  async getUserBestGuesses(user: User, limit?: number): Promise<Distance[]> {
     const locations = await this.createQueryBuilder('distance')
       .select(['distance.distance', 'location.id', 'location.img'])
       .innerJoin('distance.location', 'location')
@@ -34,6 +34,7 @@ export class DistanceRepository extends Repository<Distance> {
       .where('user.id = :uid')
       .setParameter('uid', user.id)
       .orderBy('distance.distance', 'ASC')
+      .limit(limit)
       .getMany();
     this.logger.verbose(
       `Successfully loaded best guesses from user ${user.email}`,

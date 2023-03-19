@@ -14,6 +14,7 @@ import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { Location } from 'src/entities/location.entity';
 import { User } from 'src/entities/user.entity';
 import { GetUser } from 'src/utils/types/get-user.decorator';
+import { PaginationParams } from 'src/utils/types/pagination-params';
 import { CreateLocationDTO } from './dto/create-location.dto';
 import { UpdateLocationDTO } from './dto/update-location.dto';
 import { LocationService } from './location.service';
@@ -25,7 +26,7 @@ export class LocationController {
   constructor(private locationService: LocationService) {}
 
   @Get()
-  getLocations(@Query() { limit }): Promise<Location[]> {
+  getLocations(@Query() { limit }: PaginationParams): Promise<Location[]> {
     return this.locationService.getLocations(limit);
   }
 
@@ -34,10 +35,14 @@ export class LocationController {
     return this.locationService.getRandomLocation();
   }
 
+  //pagination
   @Get('/user')
   @UseGuards(AuthGuard())
-  getUserLocations(@GetUser() user: User): Promise<Location[]> {
-    return this.locationService.getUserLocations(user);
+  getUserLocations(
+    @GetUser() user: User,
+    @Query() { limit }: PaginationParams,
+  ): Promise<Location[]> {
+    return this.locationService.getUserLocations(user, limit);
   }
 
   //get id on the end because of bug?

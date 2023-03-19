@@ -33,8 +33,8 @@ export class LocationService {
     return this.locationRepository.getRandomLocation();
   }
 
-  async getUserLocations(user: User): Promise<Location[]> {
-    return this.locationRepository.getUserLocations(user);
+  async getUserLocations(user: User, limit?: number): Promise<Location[]> {
+    return this.locationRepository.getUserLocations(user, limit);
   }
 
   async addLocation(
