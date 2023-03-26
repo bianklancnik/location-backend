@@ -6,23 +6,23 @@ import { User } from './user.entity';
 
 @Entity()
 export class Location extends CustomBaseEntity {
-  @ApiProperty()
+  @ApiProperty({ type: String })
   @Column()
   address: string;
 
-  @ApiProperty()
+  @ApiProperty({ type: String })
   @Column()
   img: string;
 
-  @ApiProperty()
+  @ApiProperty({ type: Number })
   @Column({ type: 'decimal', precision: 16, scale: 14, default: 0 })
   lat: number;
 
-  @ApiProperty()
+  @ApiProperty({ type: Number })
   @Column({ type: 'decimal', precision: 16, scale: 14, default: 0 })
   lon: number;
 
-  @ApiProperty({ isArray: true })
+  @ApiProperty({ isArray: true, type: () => Distance })
   @OneToMany(
     () => Distance,
     distance => distance.location,
@@ -33,7 +33,7 @@ export class Location extends CustomBaseEntity {
   )
   distances: Distance[];
 
-  @ApiProperty({ isArray: true })
+  @ApiProperty({ isArray: true, type: () => User })
   @ManyToOne(
     () => User,
     user => user.locations,

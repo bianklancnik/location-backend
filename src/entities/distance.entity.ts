@@ -6,11 +6,11 @@ import { User } from './user.entity';
 
 @Entity()
 export class Distance extends CustomBaseEntity {
-  @ApiProperty()
+  @ApiProperty({ type: Number })
   @Column({ type: 'decimal', precision: 10, scale: 3, default: 0 })
   distance: number;
 
-  @ApiProperty({ isArray: true })
+  @ApiProperty({ isArray: true, type: () => User })
   @ManyToOne(
     () => User,
     user => user.distances,
@@ -21,7 +21,7 @@ export class Distance extends CustomBaseEntity {
   )
   user: User;
 
-  @ApiProperty({ isArray: true })
+  @ApiProperty({ isArray: true, type: () => Location })
   @ManyToOne(
     () => Location,
     location => location.distances,

@@ -8,7 +8,7 @@ import { UpdateLocationDTO } from './dto/update-location.dto';
 @EntityRepository(Location)
 export class LocationRepository extends Repository<Location> {
   private logger = new Logger('LocationRepository');
-  async getLocations(limit?: number): Promise<Location[]> {
+  async getAllLocations(limit?: number): Promise<Location[]> {
     const locations = await this.createQueryBuilder('location')
       .select([
         'location.id',

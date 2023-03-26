@@ -1,4 +1,4 @@
-import { ApiProperty } from '@nestjs/swagger';
+import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import { IsOptional } from 'class-validator';
 import { Column, Entity, Index, OneToMany } from 'typeorm';
 import { CustomBaseEntity } from './base.entity';
@@ -7,36 +7,38 @@ import { Location } from './location.entity';
 
 @Entity()
 export class User extends CustomBaseEntity {
-  @ApiProperty()
+  @ApiProperty({ type: String })
   @Column({ unique: true })
   @Index()
   email: string;
 
-  @ApiProperty()
+  @ApiProperty({ type: String })
   @Column()
   firstName: string;
 
-  @ApiProperty()
+  @ApiProperty({ type: String })
   @Column()
   lastName: string;
 
-  @ApiProperty()
+  @ApiProperty({ type: String })
   @Column({ select: false })
   password: string;
 
-  @ApiProperty()
+  @ApiProperty({ type: String })
   @Column()
   avatar: string;
 
+  @ApiPropertyOptional({ type: String })
   @Column({ nullable: true })
   @IsOptional()
   token: string;
 
+  @ApiPropertyOptional({ type: Date })
   @Column({ nullable: true })
   @IsOptional()
   tokenExpiryDate: Date;
 
-  @ApiProperty({ isArray: true })
+  @ApiProperty({ isArray: true, type: () => Location })
   @OneToMany(
     () => Location,
     location => location.user,
@@ -47,7 +49,7 @@ export class User extends CustomBaseEntity {
   )
   locations: Location[];
 
-  @ApiProperty({ isArray: true })
+  @ApiProperty({ isArray: true, type: () => Distance })
   @OneToMany(
     () => Distance,
     distance => distance.user,
