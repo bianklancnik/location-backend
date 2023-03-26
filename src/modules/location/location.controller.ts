@@ -10,7 +10,14 @@ import {
   UseGuards,
 } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
-import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
+import {
+  ApiBadRequestResponse,
+  ApiBearerAuth,
+  ApiOkResponse,
+  ApiOperation,
+  ApiTags,
+  ApiUnauthorizedResponse,
+} from '@nestjs/swagger';
 import { Location } from 'src/entities/location.entity';
 import { User } from 'src/entities/user.entity';
 import { GetUser } from 'src/utils/types/get-user.decorator';
@@ -20,17 +27,42 @@ import { UpdateLocationDTO } from './dto/update-location.dto';
 import { LocationService } from './location.service';
 
 @ApiTags('location')
-@ApiBearerAuth()
 @Controller('location')
 export class LocationController {
   constructor(private locationService: LocationService) {}
 
   @Get()
-  getLocations(@Query() { limit }: PaginationParams): Promise<Location[]> {
-    return this.locationService.getLocations(limit);
+  @ApiOperation({
+    summary: 'Returns all locations',
+  })
+  @ApiOkResponse({ type: Location, isArray: true })
+  @ApiBadRequestResponse({
+    schema: {
+      type: 'object',
+      example: {
+        message: 'string',
+      },
+    },
+    description: '400. BadRequestException.',
+  })
+  getAllLocations(@Query() { limit }: PaginationParams): Promise<Location[]> {
+    return this.locationService.getAllLocations(limit);
   }
 
   @Get('/random')
+  @ApiOperation({
+    summary: 'Returns random location',
+  })
+  @ApiOkResponse({ type: Location })
+  @ApiBadRequestResponse({
+    schema: {
+      type: 'object',
+      example: {
+        message: 'string',
+      },
+    },
+    description: '400. BadRequestException.',
+  })
   getRandomLocation(): Promise<Location> {
     return this.locationService.getRandomLocation();
   }
@@ -38,6 +70,29 @@ export class LocationController {
   //pagination
   @Get('/user')
   @UseGuards(AuthGuard())
+  @ApiOperation({
+    summary: 'Returns locations added by user',
+  })
+  @ApiOkResponse({ type: Location, isArray: true })
+  @ApiBadRequestResponse({
+    schema: {
+      type: 'object',
+      example: {
+        message: 'string',
+      },
+    },
+    description: '400. BadRequestException.',
+  })
+  @ApiUnauthorizedResponse({
+    schema: {
+      type: 'object',
+      example: {
+        message: 'string',
+      },
+    },
+    description: '401. UnauthorizedException.',
+  })
+  @ApiBearerAuth()
   getUserLocations(
     @GetUser() user: User,
     @Query() { limit }: PaginationParams,
@@ -47,12 +102,48 @@ export class LocationController {
 
   //get id on the end because of bug?
   @Get(':id')
+  @ApiOperation({
+    summary: 'Returns location by location id',
+  })
+  @ApiOkResponse({ type: Location })
+  @ApiBadRequestResponse({
+    schema: {
+      type: 'object',
+      example: {
+        message: 'string',
+      },
+    },
+    description: '400. BadRequestException.',
+  })
   getLocationById(@Param('id') id: number): Promise<Location> {
     return this.locationService.getLocation(id);
   }
 
   @Patch(':id')
   @UseGuards(AuthGuard())
+  @ApiOperation({
+    summary: 'Update location',
+  })
+  @ApiOkResponse({ type: Location })
+  @ApiBadRequestResponse({
+    schema: {
+      type: 'object',
+      example: {
+        message: 'string',
+      },
+    },
+    description: '400. BadRequestException.',
+  })
+  @ApiUnauthorizedResponse({
+    schema: {
+      type: 'object',
+      example: {
+        message: 'string',
+      },
+    },
+    description: '401. UnauthorizedException.',
+  })
+  @ApiBearerAuth()
   updateLocation(
     @Param('id') id: number,
     @Body() updateLocationDTO: UpdateLocationDTO,
@@ -62,12 +153,58 @@ export class LocationController {
 
   @Delete(':id')
   @UseGuards(AuthGuard())
+  @ApiOperation({
+    summary: 'Delete location',
+  })
+  @ApiOkResponse({ description: '200. Returns nothing on successful delete' })
+  @ApiBadRequestResponse({
+    schema: {
+      type: 'object',
+      example: {
+        message: 'string',
+      },
+    },
+    description: '400. BadRequestException.',
+  })
+  @ApiUnauthorizedResponse({
+    schema: {
+      type: 'object',
+      example: {
+        message: 'string',
+      },
+    },
+    description: '401. UnauthorizedException.',
+  })
+  @ApiBearerAuth()
   deleteLocation(@Param('id') id: number): Promise<void> {
     return this.locationService.deleteLocation(id);
   }
 
   @Post()
   @UseGuards(AuthGuard())
+  @ApiOperation({
+    summary: 'Add new location',
+  })
+  @ApiOkResponse({ description: '200. Returns nothing on successful add' })
+  @ApiBadRequestResponse({
+    schema: {
+      type: 'object',
+      example: {
+        message: 'string',
+      },
+    },
+    description: '400. BadRequestException.',
+  })
+  @ApiUnauthorizedResponse({
+    schema: {
+      type: 'object',
+      example: {
+        message: 'string',
+      },
+    },
+    description: '401. UnauthorizedException.',
+  })
+  @ApiBearerAuth()
   addLocation(
     @Body() createLocationDTO: CreateLocationDTO,
     @GetUser() user: User,

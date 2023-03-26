@@ -5,6 +5,7 @@ export class CreateLocationDTO {
   @ApiProperty({
     description: 'Location address',
     default: 'Goriska cesta 65, 3320 Velenje, Slovenia',
+    type: String,
   })
   @IsNotEmpty()
   address: string;
@@ -12,6 +13,7 @@ export class CreateLocationDTO {
   @ApiProperty({
     description: 'Location lantitude',
     default: 20,
+    type: Number,
   })
   @IsNotEmpty()
   lat: number;
@@ -19,11 +21,12 @@ export class CreateLocationDTO {
   @ApiProperty({
     description: 'Location longitude',
     default: 70,
+    type: Number,
   })
   @IsNotEmpty()
   lon: number;
 
-  @ApiProperty({ description: 'Image of the location' })
+  @ApiProperty({ description: 'Image of the location', type: String })
   @IsNotEmpty()
   img: string;
 }

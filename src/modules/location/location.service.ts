@@ -10,8 +10,8 @@ export class LocationService {
   private logger = new Logger('LocationService');
   constructor(private locationRepository: LocationRepository) {}
 
-  async getLocations(limit?: number): Promise<Location[]> {
-    return this.locationRepository.getLocations(limit);
+  async getAllLocations(limit?: number): Promise<Location[]> {
+    return this.locationRepository.getAllLocations(limit);
   }
 
   async getLocation(id: number): Promise<Location> {
