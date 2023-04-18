@@ -1,4 +1,6 @@
-# Guess Location (SkillUp Mentor)
+# Geotagger (SkillUp Mentor)
+
+Link to website: TODO
 
 ### Table of Contents
 
@@ -11,11 +13,15 @@
 
 ## Description
 
-Full-stack application
+Full-stack application for guessing locations with Google Maps based on the picture. Users can add new locations, edit and delete those locations.
+Specific location also has a leadreboard, so you can compare your guess with other users.
+Application also allows you to sign up if you don't have an account yet. If you forget your password you can retrieve with your email address.
+You can edit your account info and upload a profile image.
 
 ---
 
 **Home page**
+![geotagger_homepage](./src/assets/homepage.png)
 
 ## Technologies
 
@@ -52,12 +58,7 @@ $ npm i
 
 ```bash
 # development
-$ npm run start
-```
-
-```bash
-# watch mode
-$ npm run start:dev
+$ npm start
 ```
 
 ---
